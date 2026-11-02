@@ -1,16 +1,37 @@
-# React + Vite
+# Garage Sale
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live site: https://metrior.github.io/garage_sale/**
 
-Currently, two official plugins are available:
+A small shop for garage sale items, built with React, Vite and MUI. Visitors browse a photo gallery, add items to a cart, and check out by opening a Telegram chat with a prewritten message listing the items they want.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Editing items
 
-## React Compiler
+All items live in [`src/data/items.json`](src/data/items.json):
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```json
+{
+  "id": "desk-lamp",
+  "title": "Desk Lamp",
+  "description": "Adjustable metal desk lamp with warm LED bulb included.",
+  "price": 15,
+  "image": "images/desk-lamp.jpg"
+}
+```
 
-## Expanding the ESLint configuration
+- `id` must be unique. Removing an item from the JSON also removes it from visitors' carts the next time they open the site.
+- `image` is either a full `https://` URL or a path to a file in [`public/`](public/), such as `images/desk-lamp.jpg` for `public/images/desk-lamp.jpg`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The Telegram username, currency and locale are set in [`src/config.js`](src/config.js).
+
+## Development
+
+```sh
+npm install
+npm run dev
+```
+
+## Deployment
+
+Every push to `main` builds the site and publishes it to the `gh-pages` branch via [GitHub Actions](.github/workflows/deploy.yml). GitHub Pages serves that branch.
+
+To publish manually from your machine instead, run `npm run deploy`.
