@@ -1,0 +1,44 @@
+[
+  {
+    "id": "desk-lamp",
+    "title": "Desk Lamp",
+    "description": "Adjustable metal desk lamp with warm LED bulb included. Works perfectly.",
+    "price": 15,
+    "image": "https://picsum.photos/seed/desk-lamp/800/600"
+  },
+  {
+    "id": "office-chair",
+    "title": "Office Chair",
+    "description": "Ergonomic office chair with lumbar support and adjustable height. Light signs of use.",
+    "price": 60,
+    "image": "https://picsum.photos/seed/office-chair/800/600"
+  },
+  {
+    "id": "bookshelf",
+    "title": "Bookshelf",
+    "description": "Five-shelf wooden bookshelf, 180 cm tall. Easy to disassemble for transport.",
+    "price": 45,
+    "image": "https://picsum.photos/seed/bookshelf/800/600"
+  },
+  {
+    "id": "coffee-maker",
+    "title": "Coffee Maker",
+    "description": "Drip coffee maker, 12 cups, with glass carafe and reusable filter.",
+    "price": 25,
+    "image": "https://picsum.photos/seed/coffee-maker/800/600"
+  },
+  {
+    "id": "bicycle",
+    "title": "City Bicycle",
+    "description": "28\" city bike with 7 gears, front basket and rear rack. Recently serviced.",
+    "price": 120,
+    "image": "https://picsum.photos/seed/bicycle/800/600"
+  },
+  {
+    "id": "monitor",
+    "title": "27\" Monitor",
+    "description": "27-inch IPS monitor, 1440p, HDMI and DisplayPort. Comes with the original stand.",
+    "price": 110,
+    "image": "https://picsum.photos/seed/monitor/800/600"
+  }
+]
