@@ -9,6 +9,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
 import { useCart } from '../context/useCart'
 import { formatPrice } from '../utils/formatPrice'
+import { imageUrl } from '../utils/imageUrl'
 
 export default function ItemCard({ item }) {
   const { addToCart, removeFromCart, isInCart } = useCart()
@@ -18,7 +19,7 @@ export default function ItemCard({ item }) {
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardMedia
         component="img"
-        image={item.image}
+        image={imageUrl(item.image)}
         alt={item.title}
         loading="lazy"
         sx={{ aspectRatio: '4 / 3', objectFit: 'cover' }}

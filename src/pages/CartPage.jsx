@@ -17,6 +17,7 @@ import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
 import TelegramIcon from '@mui/icons-material/Telegram'
 import { useCart } from '../context/useCart'
 import { formatPrice } from '../utils/formatPrice'
+import { imageUrl } from '../utils/imageUrl'
 import { buildTelegramCheckoutUrl } from '../utils/telegram'
 
 function EmptyCart() {
@@ -60,7 +61,7 @@ export default function CartPage() {
                 }
               >
                 <ListItemAvatar sx={{ mr: 2 }}>
-                  <Avatar variant="rounded" src={item.image} alt={item.title} sx={{ width: 72, height: 72 }} />
+                  <Avatar variant="rounded" src={imageUrl(item.image)} alt={item.title} sx={{ width: 72, height: 72 }} />
                 </ListItemAvatar>
                 <ListItemText
                   primary={item.title}
