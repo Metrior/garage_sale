@@ -15,8 +15,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
 import TelegramIcon from '@mui/icons-material/Telegram'
+import { SELLER_NAME } from '../config'
 import { useCart } from '../context/useCart'
-import { formatPrice } from '../utils/formatPrice'
+import { formatItemPrice, formatPrice } from '../utils/formatPrice'
 import { imageUrl } from '../utils/imageUrl'
 import { buildTelegramCheckoutUrl } from '../utils/telegram'
 
@@ -61,11 +62,11 @@ export default function CartPage() {
                 }
               >
                 <ListItemAvatar sx={{ mr: 2 }}>
-                  <Avatar variant="rounded" src={imageUrl(item.image)} alt={item.title} sx={{ width: 72, height: 72 }} />
+                  <Avatar variant="rounded" src={imageUrl(item.images[0], 'thumb')} alt={item.title} sx={{ width: 72, height: 72 }} />
                 </ListItemAvatar>
                 <ListItemText
                   primary={item.title}
-                  secondary={formatPrice(item.price)}
+                  secondary={formatItemPrice(item)}
                   sx={{ '& .MuiListItemText-primary': { fontWeight: 600 } }}
                 />
               </ListItem>
@@ -83,17 +84,23 @@ export default function CartPage() {
               Total ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}):{' '}
               <strong>{formatPrice(total)}</strong>
             </Typography>
-            <Button
-              component="a"
-              href={buildTelegramCheckoutUrl(cartItems, total)}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="contained"
-              size="large"
-              startIcon={<TelegramIcon />}
-            >
-              Checkout
-            </Button>
+            <Stack spacing={0.5} sx={{ alignItems: { xs: 'stretch', sm: 'flex-end' } }}>
+              <Button
+                component="a"
+                href={buildTelegramCheckoutUrl(cartItems, total)}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="contained"
+                size="large"
+                startIcon={<TelegramIcon />}
+                aria-describedby="checkout-hint"
+              >
+                Checkout
+              </Button>
+              <Typography id="checkout-hint" variant="caption" color="text.secondary" sx={{ textAlign: { xs: 'center', sm: 'right' } }}>
+                Opens a Telegram chat with {SELLER_NAME} to arrange the purchase
+              </Typography>
+            </Stack>
           </Stack>
         </Paper>
       )}

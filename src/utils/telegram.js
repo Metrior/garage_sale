@@ -1,9 +1,9 @@
 import { TELEGRAM_USERNAME } from '../config'
-import { formatPrice } from './formatPrice'
+import { formatItemPrice, formatPrice } from './formatPrice'
 
 export function buildCheckoutMessage(items, total) {
   const lines = items.map(
-    (item, index) => `${index + 1}. ${item.title} — ${formatPrice(item.price)}`,
+    (item, index) => `${index + 1}. ${item.title} — ${formatItemPrice(item)}`,
   )
 
   return [

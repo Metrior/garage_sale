@@ -10,18 +10,19 @@ All items live in [`src/data/items.json`](src/data/items.json):
 
 ```json
 {
-  "id": "desk-lamp",
-  "title": "Desk Lamp",
-  "description": "Adjustable metal desk lamp with warm LED bulb included.",
-  "price": 15,
-  "image": "images/desk-lamp.jpg"
+  "id": "knife",
+  "title": "Нож с ножнами",
+  "description": "Нож с гравировкой на клинке и кожаными ножнами.",
+  "price": 120,
+  "images": ["Knife_1.jpg", "Knife_2.jpg"]
 }
 ```
 
 - `id` must be unique. Removing an item from the JSON also removes it from visitors' carts the next time they open the site.
-- `image` is either a full `https://` URL or a path to a file in [`public/`](public/), such as `images/desk-lamp.jpg` for `public/images/desk-lamp.jpg`.
+- `price` is in shekels (₪).
+- `images` lists one or more photos; the first one is shown on the card, and clicking it opens all of them in a swipeable viewer. Each entry is the name of a file in [`src/images/`](src/images/) (or a full `https://` URL). Drop full-size phone photos there as they are: the build makes resized WebP copies and strips their metadata (including GPS location), and the originals are not published.
 
-The Telegram username, currency and locale are set in [`src/config.js`](src/config.js).
+The Telegram username, seller name, currency and locale are set in [`src/config.js`](src/config.js).
 
 ## Development
 
