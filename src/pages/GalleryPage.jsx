@@ -33,10 +33,10 @@ export default function GalleryPage() {
         <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
           Items for sale
         </Typography>
-        <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center', width: { xs: '100%', sm: 'auto' } }}>
-          <SearchField value={query} onChange={setQuery} sx={{ flexGrow: 1, minWidth: 0, width: { sm: 260 } }} />
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1.5, width: { xs: '100%', sm: 'auto' } }}>
+          <SearchField value={query} onChange={setQuery} sx={{ flexGrow: 1, minWidth: 250, width: { sm: 260 } }} />
           <SortMenu value={sort} onChange={setSort} />
-        </Stack>
+        </Box>
       </Stack>
 
       {visibleItems.length === 0 && (
