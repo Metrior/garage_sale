@@ -1,9 +1,14 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { AuthProvider } from './context/AuthProvider'
 import { CartProvider } from './context/CartProvider'
+import { ItemsProvider } from './context/ItemsProvider'
+import AdminRoute from './components/AdminRoute'
 import Header from './components/Header'
+import AdminPage from './pages/AdminPage'
 import GalleryPage from './pages/GalleryPage'
+import ItemFormPage from './pages/ItemFormPage'
 import CartPage from './pages/CartPage'
 import LocationPage from './pages/LocationPage'
 
@@ -22,17 +27,26 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <CartProvider>
-        <HashRouter>
-          <Header />
-          <Routes>
-            <Route path="/" element={<GalleryPage />} />
-            <Route path="/location" element={<LocationPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </HashRouter>
-      </CartProvider>
+      <AuthProvider>
+        <ItemsProvider>
+          <CartProvider>
+            <HashRouter>
+              <Header />
+              <Routes>
+                <Route path="/" element={<GalleryPage />} />
+                <Route path="/location" element={<LocationPage />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/admin" element={<AdminRoute />}>
+                  <Route index element={<AdminPage />} />
+                  <Route path="new" element={<ItemFormPage />} />
+                  <Route path="edit/:id" element={<ItemFormPage />} />
+                </Route>
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </HashRouter>
+          </CartProvider>
+        </ItemsProvider>
+      </AuthProvider>
     </ThemeProvider>
   )
 }

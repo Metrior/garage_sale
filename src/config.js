@@ -13,3 +13,7 @@ export const LOCALE = 'en-US'
 
 // localStorage key that holds the ids of items in the cart.
 export const CART_STORAGE_KEY = 'garage-sale-cart'
+
+// Supabase project that stores the items, photos and the admin login, set in .env.
+export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
+export const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY

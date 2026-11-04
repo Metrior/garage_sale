@@ -4,20 +4,24 @@ import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import items from '../data/items.json'
 import ItemCard from '../components/ItemCard'
 import ItemDialog from '../components/ItemDialog'
+import ItemsLoadState from '../components/ItemsLoadState'
 import SearchField from '../components/SearchField'
 import SortMenu from '../components/SortMenu'
+import { useItems } from '../context/useItems'
+import { useDebouncedQuery } from '../hooks/useDebouncedQuery'
 import { searchByTitle } from '../utils/searchItems'
 import { DEFAULT_SORT, sortItems } from '../utils/sortItems'
 
 export default function GalleryPage() {
+  const { items, status } = useItems()
   const [sort, setSort] = useState(DEFAULT_SORT)
   const [query, setQuery] = useState('')
   const [dialogItem, setDialogItem] = useState(null)
   const [dialogOpen, setDialogOpen] = useState(false)
-  const visibleItems = useMemo(() => searchByTitle(sortItems(items, sort), query), [sort, query])
+  const searchQuery = useDebouncedQuery(query)
+  const visibleItems = useMemo(() => searchByTitle(sortItems(items, sort), searchQuery), [items, sort, searchQuery])
 
   const openItem = (item) => {
     setDialogItem(item)
@@ -39,9 +43,15 @@ export default function GalleryPage() {
         </Box>
       </Stack>
 
-      {visibleItems.length === 0 && (
+      <ItemsLoadState />
+      {status === 'ready' && items.length === 0 && (
+        <Typography variant="h6" sx={{ py: 8, textAlign: 'center' }}>
+          Nothing for sale right now. Check back soon!
+        </Typography>
+      )}
+      {status === 'ready' && items.length > 0 && visibleItems.length === 0 && (
         <Stack spacing={2} sx={{ alignItems: 'center', py: 8, textAlign: 'center' }}>
-          <Typography variant="h6">Nothing found for “{query.trim()}”</Typography>
+          <Typography variant="h6">Nothing found for “{searchQuery.trim()}”</Typography>
           <Button variant="contained" onClick={() => setQuery('')}>
             Clear search
           </Button>

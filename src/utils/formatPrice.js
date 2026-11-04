@@ -6,6 +6,9 @@ const formatter = new Intl.NumberFormat(LOCALE, {
   trailingZeroDisplay: 'stripIfInteger',
 })
 
+// The currency sign on its own, e.g. "₪" (used as the price field's prefix).
+export const CURRENCY_SYMBOL = formatter.formatToParts(0).find((part) => part.type === 'currency')?.value ?? CURRENCY
+
 export function formatPrice(value) {
   return formatter.format(value)
 }

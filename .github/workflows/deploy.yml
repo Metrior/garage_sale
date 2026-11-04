@@ -16,6 +16,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      # Without these the build succeeds but the site can't load any items, so stop before publishing.
+      - name: Check Supabase variables
+        if: ${{ vars.VITE_SUPABASE_URL == '' || vars.VITE_SUPABASE_PUBLISHABLE_KEY == '' }}
+        run: |
+          echo "::error::Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY in Settings → Secrets and variables → Actions → Variables."
+          exit 1
+
       - uses: actions/checkout@v5
 
       - uses: actions/setup-node@v5
@@ -26,6 +33,9 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
 
       - name: Publish dist to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
