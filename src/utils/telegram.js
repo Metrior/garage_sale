@@ -7,11 +7,11 @@ export function buildCheckoutMessage(items, total) {
   )
 
   return [
-    "Hi! I'd like to buy these items from your garage sale:",
+    "Привет! Я бы хотел/а купить вот эти вещи:",
     '',
     ...lines,
     '',
-    `Total: ${formatPrice(total)}`,
+    `Сумма: ${formatPrice(total)}`,
   ].join('\n')
 }
 
