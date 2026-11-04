@@ -1,10 +1,10 @@
 import { LOCALE } from '../config'
-import type { Item } from '../types'
+import type { Item, SortValue } from '../types'
 
 type Compare = (a: Item, b: Item) => number
 
 interface SortOption {
-  value: string
+  value: SortValue
   label: string
   compare: Compare
 }
@@ -19,8 +19,6 @@ export const SORT_OPTIONS = [
   { value: 'title-asc', label: 'Title: A to Z', compare: byTitle },
   { value: 'title-desc', label: 'Title: Z to A', compare: (a, b) => byTitle(b, a) },
 ] as const satisfies readonly SortOption[]
-
-export type SortValue = (typeof SORT_OPTIONS)[number]['value']
 
 export const DEFAULT_SORT: SortValue = 'price-desc'
 

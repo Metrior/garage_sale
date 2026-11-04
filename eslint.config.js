@@ -17,6 +17,12 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.browser,
+      // Type information for the rules below.
+      parserOptions: { projectService: true, tsconfigRootDir: import.meta.dirname },
+    },
+    rules: {
+      // Flags anything marked @deprecated in React, MUI, React Router or Supabase.
+      '@typescript-eslint/no-deprecated': 'error',
     },
   },
 ])

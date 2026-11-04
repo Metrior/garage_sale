@@ -1,5 +1,6 @@
 import { SUPABASE_URL } from '../config'
-import { PHOTO_BUCKET, photoPath, type PhotoSize } from './photoFiles'
+import type { PhotoSize } from '../types'
+import { PHOTO_BUCKET, photoPath } from './photoFiles'
 
 export function isExternalImage(name: string): boolean {
   return /^(https?:)?\/\//.test(name) || /^(data|blob):/.test(name)

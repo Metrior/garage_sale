@@ -1,4 +1,5 @@
-import { PHOTO_SIZES, type PhotoBox, type PhotoSize } from './photoFiles'
+import type { PhotoBox, PhotoSize } from '../types'
+import { PHOTO_SIZES } from './photoFiles'
 
 // Makes the two stored sizes of a photo in the browser. Drawing it onto a canvas and re-encoding
 // it drops all metadata (including GPS location) from phone photos before they are uploaded.

@@ -1,22 +1,15 @@
+import type { PhotoBox, PhotoSize } from '../types'
+
 // Supabase Storage bucket that holds item photos (created in supabase/migrations).
 export const PHOTO_BUCKET = 'item-photos'
 
 // Every photo is stored in two sizes, neither ever larger than the original:
 // `thumb` for cards and the cart (shorter side 640px, cards crop it to a square) and
 // `full` for the photo viewer (longer side 1600px).
-export interface PhotoBox {
-  width: number
-  height: number
-  // 'outside' covers the box (the shorter side fits it), 'inside' fits within it (the longer side fits it).
-  fit: 'outside' | 'inside'
-}
-
 export const PHOTO_SIZES = {
   thumb: { width: 640, height: 640, fit: 'outside' },
   full: { width: 1600, height: 1600, fit: 'inside' },
-} as const satisfies Record<string, PhotoBox>
-
-export type PhotoSize = keyof typeof PHOTO_SIZES
+} as const satisfies Record<PhotoSize, PhotoBox>
 
 export const PHOTO_SIZE_NAMES = Object.keys(PHOTO_SIZES) as PhotoSize[]
 
