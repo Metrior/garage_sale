@@ -11,7 +11,7 @@ create table public.items (
   description text not null default '',
   price integer not null check (price >= 0), -- whole shekels
   tag text, -- optional note shown under the price, e.g. "за штуку"
-  -- Photo keys in display order; the first is the cover. See src/utils/photoFiles.js for the storage paths.
+  -- Photo keys in display order; the first is the cover. See src/utils/photoFiles.ts for the storage paths.
   images text[] not null check (cardinality(images) > 0),
   created_at timestamptz not null default now()
 );

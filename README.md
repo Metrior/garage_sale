@@ -13,7 +13,7 @@ Items and their photos are stored in [Supabase](https://supabase.com) and manage
 
 On the item form, the first photo is the cover (use the star on another photo to make it the cover). Photos are resized in the browser before upload, which also strips their metadata (including GPS location). `price` is a whole number of shekels (₪), and the optional price note (e.g. "за штуку") is shown under the price. Deleting an item also deletes its photos and removes it from visitors' carts the next time they open the site.
 
-The Telegram username, seller name, pickup address (shown on the Location page and its map), currency and locale are set in [`src/config.js`](src/config.js).
+The Telegram username, seller name, pickup address (shown on the Location page and its map), currency and locale are set in [`src/config.ts`](src/config.ts).
 
 The Supabase project is set by `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`: in a `.env` file for local development (it isn't committed), and as repository variables (Settings → Secrets and variables → Actions → Variables) for the GitHub Actions deploy.
 
@@ -23,6 +23,8 @@ The Supabase project is set by `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABL
 npm install
 npm run dev
 ```
+
+The app is written in TypeScript. `npm run build` type-checks before building (`npm run typecheck` runs only the check). The database types in [`src/lib/database.types.ts`](src/lib/database.types.ts) are generated from the Supabase schema; regenerate them after changing a migration.
 
 ## Deployment
 
