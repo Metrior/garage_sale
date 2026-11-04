@@ -22,7 +22,7 @@ All items live in [`src/data/items.json`](src/data/items.json):
 - `price` is in shekels (₪).
 - `images` lists one or more photos; the first one is shown on the card, and clicking it opens all of them in a swipeable viewer. Each entry is the name of a file in [`src/images/`](src/images/) (or a full `https://` URL). Drop full-size phone photos there as they are: the build makes resized WebP copies and strips their metadata (including GPS location), and the originals are not published.
 
-The Telegram username, seller name, currency and locale are set in [`src/config.js`](src/config.js).
+The Telegram username, seller name, pickup address (shown on the Location page and its map), currency and locale are set in [`src/config.js`](src/config.js).
 
 ## Development
 

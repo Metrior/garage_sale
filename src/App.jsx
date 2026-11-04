@@ -5,6 +5,7 @@ import { CartProvider } from './context/CartProvider'
 import Header from './components/Header'
 import GalleryPage from './pages/GalleryPage'
 import CartPage from './pages/CartPage'
+import LocationPage from './pages/LocationPage'
 
 const theme = createTheme({
   palette: {
@@ -26,6 +27,7 @@ export default function App() {
           <Header />
           <Routes>
             <Route path="/" element={<GalleryPage />} />
+            <Route path="/location" element={<LocationPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

@@ -4,6 +4,9 @@ export const TELEGRAM_USERNAME = 'metrior'
 // Name of the seller shown under the checkout button.
 export const SELLER_NAME = 'Pavel'
 
+// Pickup address shown on the Location page; the embedded Google Map searches for this exact text.
+export const ADDRESS = "Ma'ale haNesher 6, Ramat Gan"
+
 // Currency and locale used to format all prices (ISO 4217 code, BCP 47 locale).
 export const CURRENCY = 'ILS'
 export const LOCALE = 'en-US'
