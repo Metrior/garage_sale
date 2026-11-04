@@ -12,15 +12,14 @@ import { imageUrl } from '../utils/imageUrl'
 import CartToggleButton from './CartToggleButton'
 import ItemPrice from './ItemPrice'
 
-// `actions` replaces the default "Add to cart" button (the admin page shows Edit and Delete instead),
-// and `openLabel` describes what clicking the photo does.
-export default function ItemCard({ item, onOpen, actions, openLabel }) {
+// `actions` replaces the default "Add to cart" button (the logged-in admin sees Edit and Delete instead).
+export default function ItemCard({ item, onOpen, actions }) {
   const [imageLoaded, setImageLoaded] = useState(false)
   const photoCount = item.images.length
 
   return (
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <CardActionArea onClick={onOpen} aria-label={openLabel ?? `View photos of ${item.title}`} sx={{ position: 'relative' }}>
+      <CardActionArea onClick={onOpen} aria-label={`View photos of ${item.title}`} sx={{ position: 'relative' }}>
         {!imageLoaded && (
           <Skeleton variant="rectangular" animation="wave" sx={{ position: 'absolute', inset: 0, height: '100%' }} />
         )}

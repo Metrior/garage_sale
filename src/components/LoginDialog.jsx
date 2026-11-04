@@ -31,7 +31,7 @@ function LoginForm({ onClose }) {
     try {
       await signIn(email.trim(), password)
       onClose()
-      navigate('/admin')
+      navigate('/')
     } catch (err) {
       setError(LOGIN_ERRORS[err.code] ?? err.message)
       setSubmitting(false)

@@ -5,8 +5,8 @@ import { AuthProvider } from './context/AuthProvider'
 import { CartProvider } from './context/CartProvider'
 import { ItemsProvider } from './context/ItemsProvider'
 import AdminRoute from './components/AdminRoute'
+import GalleryRoute from './components/GalleryRoute'
 import Header from './components/Header'
-import AdminPage from './pages/AdminPage'
 import GalleryPage from './pages/GalleryPage'
 import ItemFormPage from './pages/ItemFormPage'
 import CartPage from './pages/CartPage'
@@ -33,14 +33,15 @@ export default function App() {
             <HashRouter>
               <Header />
               <Routes>
-                <Route path="/" element={<GalleryPage />} />
+                <Route element={<GalleryRoute />}>
+                  <Route path="/" element={<GalleryPage />} />
+                  <Route element={<AdminRoute />}>
+                    <Route path="/new" element={<ItemFormPage />} />
+                    <Route path="/edit/:id" element={<ItemFormPage />} />
+                  </Route>
+                </Route>
                 <Route path="/location" element={<LocationPage />} />
                 <Route path="/cart" element={<CartPage />} />
-                <Route path="/admin" element={<AdminRoute />}>
-                  <Route index element={<AdminPage />} />
-                  <Route path="new" element={<ItemFormPage />} />
-                  <Route path="edit/:id" element={<ItemFormPage />} />
-                </Route>
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </HashRouter>

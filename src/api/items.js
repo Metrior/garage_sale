@@ -5,7 +5,7 @@ import { preparePhoto } from '../utils/preparePhoto'
 
 const COLUMNS = 'id, title, description, price, tag, images, created_at'
 
-// Newest first; the gallery and admin pages apply their own sort on top.
+// Newest first; the gallery applies its own sort on top.
 export async function fetchItems() {
   const { data, error } = await supabase.from('items').select(COLUMNS).order('created_at', { ascending: false })
   if (error) throw error

@@ -22,7 +22,6 @@ const NAV_LINKS = [
   { to: '/', label: 'Home', end: true },
   { to: '/location', label: 'Location' },
 ]
-const ADMIN_LINK = { to: '/admin', label: 'Admin' }
 
 // "Admin login" when logged out, "Log out" when logged in. Icon-only on phones to keep the bar on one line.
 function AccountButton() {
@@ -53,8 +52,6 @@ function AccountButton() {
 
 export default function Header() {
   const { count, total } = useCart()
-  const { isAdmin } = useAuth()
-  const navLinks = isAdmin ? [...NAV_LINKS, ADMIN_LINK] : NAV_LINKS
   const itemsLabel = `${count} ${count === 1 ? 'item' : 'items'}`
 
   return (
@@ -74,7 +71,7 @@ export default function Header() {
         </Box>
 
         <Box component="nav" aria-label="Main" sx={{ display: 'flex', gap: 0.5, ml: { xs: 1, sm: 3 } }}>
-          {navLinks.map(({ to, label, end }) => (
+          {NAV_LINKS.map(({ to, label, end }) => (
             <Button
               key={to}
               component={NavLink}

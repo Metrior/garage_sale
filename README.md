@@ -9,7 +9,7 @@ A small shop for garage sale items, built with React, Vite, MUI and Supabase. Vi
 Items and their photos are stored in [Supabase](https://supabase.com) and managed from the site itself:
 
 1. Click **Admin login** in the top bar (the login icon on phones) and sign in with the admin account.
-2. Open the **Admin** tab. **Add Item** creates an item; each card has **Edit** and **Delete**.
+2. The home page now shows **Add Item** above the search and sort, and each card has **Edit** and **Delete** instead of **Add to cart**.
 
 On the item form, the first photo is the cover (use the star on another photo to make it the cover). Photos are resized in the browser before upload, which also strips their metadata (including GPS location). `price` is a whole number of shekels (₪), and the optional price note (e.g. "за штуку") is shown under the price. Deleting an item also deletes its photos and removes it from visitors' carts the next time they open the site.
 

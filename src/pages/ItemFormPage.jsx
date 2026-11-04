@@ -102,7 +102,7 @@ function ItemForm({ item }) {
         await createItem(fields)
       }
       await reload()
-      navigate('/admin')
+      navigate('/')
     } catch (error) {
       console.error(error)
       // Nothing points at the photos uploaded during this attempt, so they're deleted; a retry uploads them again.
@@ -179,7 +179,7 @@ function ItemForm({ item }) {
               {progress}
             </Typography>
           )}
-          <Button component={RouterLink} to="/admin" color="secondary" disabled={saving}>
+          <Button component={RouterLink} to="/" color="secondary" disabled={saving}>
             Cancel
           </Button>
           <Button type="submit" variant="contained" size="large" loading={saving}>
@@ -191,7 +191,7 @@ function ItemForm({ item }) {
   )
 }
 
-// /admin/new and /admin/edit/:id
+// /new and /edit/:id
 export default function ItemFormPage() {
   const { id } = useParams()
   const { items, status } = useItems()
@@ -206,7 +206,7 @@ export default function ItemFormPage() {
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
-      <Button component={RouterLink} to="/admin" color="secondary" startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
+      <Button component={RouterLink} to="/" color="secondary" startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
         Back to items
       </Button>
       <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 700 }}>
