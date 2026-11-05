@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type SubmitEvent } from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import InputAdornment from '@mui/material/InputAdornment'
 import Paper from '@mui/material/Paper'
 import Stack from '@mui/material/Stack'
@@ -33,6 +35,7 @@ export default function ItemForm({ item }: { item?: Item }) {
   const [title, setTitle] = useState(item?.title ?? '')
   const [description, setDescription] = useState(item?.description ?? '')
   const [price, setPrice] = useState(item ? String(item.price) : '')
+  const [perItem, setPerItem] = useState(item?.per_item ?? false)
   const [tag, setTag] = useState(item?.tag ?? '')
   const [photos, setPhotos] = useState<FormPhoto[]>(() =>
     (item?.images ?? []).map((key) => ({ id: key, key, preview: imageUrl(key, 'thumb') })),
@@ -93,6 +96,7 @@ export default function ItemForm({ item }: { item?: Item }) {
         title: title.trim(),
         description: description.trim(),
         price: Number(price.trim()),
+        per_item: perItem,
         tag: tag.trim() || null,
         images: keys,
       }
@@ -162,11 +166,18 @@ export default function ItemForm({ item }: { item?: Item }) {
             }}
             sx={{ width: { sm: 200 } }}
           />
+          {/* Lined up with the 56px-tall text fields rather than stretched to the row's height. */}
+          <FormControlLabel
+            control={<Checkbox checked={perItem} onChange={(event) => setPerItem(event.target.checked)} />}
+            label="Per item"
+            disabled={saving}
+            sx={{ alignSelf: 'flex-start', height: { sm: 56 }, flexShrink: 0 }}
+          />
           <TextField
-            label="Price note (optional)"
+            label="Tag (optional)"
             value={tag}
             onChange={(event) => setTag(event.target.value)}
-            helperText="Shown under the price, e.g. “за штуку”"
+            helperText="Shown under the price"
             disabled={saving}
             sx={{ flexGrow: 1 }}
           />

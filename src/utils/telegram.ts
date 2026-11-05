@@ -4,7 +4,7 @@ import { formatItemPrice, formatPrice } from './formatPrice'
 
 export function buildCheckoutMessage(items: Item[], total: number): string {
   const lines = items.map(
-    (item, index) => `${index + 1}. ${item.title} — ${formatItemPrice(item)}`,
+    (item, index) => `${index + 1}. ${item.title} — ${formatItemPrice(item, 'за штуку')}`,
   )
 
   return [

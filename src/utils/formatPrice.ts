@@ -14,8 +14,12 @@ export function formatPrice(value: number): string {
   return formatter.format(value)
 }
 
-// One-line price for lists and messages, e.g. "₪40 (за штуку)".
-export function formatItemPrice(item: Pick<Item, 'price' | 'tag'>): string {
+// Shown next to the price of items whose `per_item` is set.
+export const PER_ITEM_LABEL = 'per item'
+
+// One-line price for lists and messages, e.g. "₪40 (per item)". The Russian checkout message passes "за штуку".
+export function formatItemPrice(item: Pick<Item, 'price' | 'per_item' | 'tag'>, perItemLabel = PER_ITEM_LABEL): string {
   const price = formatPrice(item.price)
-  return item.tag ? `${price} (${item.tag})` : price
+  const notes = [item.per_item ? perItemLabel : null, item.tag].filter(Boolean)
+  return notes.length > 0 ? `${price} (${notes.join(', ')})` : price
 }

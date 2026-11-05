@@ -11,7 +11,7 @@ Items and their photos are stored in [Supabase](https://supabase.com) and manage
 1. Click **Admin login** in the top bar (the login icon on phones) and sign in with the admin account.
 2. The home page now shows **Add Item** above the search and sort, and each card has **Edit** and **Delete** instead of **Add to cart**.
 
-On the item form, the first photo is the cover (use the star on another photo to make it the cover). Photos are resized in the browser before upload, which also strips their metadata (including GPS location). `price` is a whole number of shekels (₪), and the optional price note (e.g. "за штуку") is shown under the price. Deleting an item also deletes its photos and removes it from visitors' carts the next time they open the site.
+On the item form, the first photo is the cover (use the star on another photo to make it the cover). Photos are resized in the browser before upload, which also strips their metadata (including GPS location). `price` is a whole number of shekels (₪). Ticking **Per item** shows a "per item" chip under the price (and "за штуку" in the Telegram checkout message); the optional tag is shown as a chip next to it. Deleting an item also deletes its photos and removes it from visitors' carts the next time they open the site.
 
 The Telegram username, seller name, pickup address (shown on the Location page and its map), currency and locale are set in [`src/config.ts`](src/config.ts).
 

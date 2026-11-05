@@ -23,6 +23,7 @@ export type Database = {
           description: string
           id: string
           images: string[]
+          per_item: boolean
           price: number
           tag: string | null
           title: string
@@ -32,6 +33,7 @@ export type Database = {
           description?: string
           id?: string
           images: string[]
+          per_item?: boolean
           price: number
           tag?: string | null
           title: string
@@ -41,6 +43,7 @@ export type Database = {
           description?: string
           id?: string
           images?: string[]
+          per_item?: boolean
           price?: number
           tag?: string | null
           title?: string
