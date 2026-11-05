@@ -13,21 +13,45 @@ import LoginDialog from '../LoginDialog'
 export default function AccountButton() {
   const { user, signOut } = useAuth()
   const [loginOpen, setLoginOpen] = useState(false)
+  const [loggingOut, setLoggingOut] = useState(false)
   const iconOnly = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
   const label = user ? 'Log out' : 'Admin login'
   const icon = user ? <LogoutIcon /> : <LoginIcon />
-  const onClick = user ? signOut : () => setLoginOpen(true)
+
+  const logOut = async () => {
+    setLoggingOut(true)
+    try {
+      await signOut()
+    } finally {
+      setLoggingOut(false)
+    }
+  }
+  const onClick = user ? logOut : () => setLoginOpen(true)
 
   return (
     <>
       {iconOnly ? (
         <Tooltip title={label}>
-          <IconButton color="inherit" aria-label={label} onClick={onClick} edge="end" sx={{ ml: 0.5 }}>
+          <IconButton
+            color="inherit"
+            aria-label={label}
+            onClick={onClick}
+            loading={loggingOut}
+            edge="end"
+            sx={{ ml: 0.5 }}
+          >
             {icon}
           </IconButton>
         </Tooltip>
       ) : (
-        <Button color="inherit" startIcon={icon} onClick={onClick} sx={{ textTransform: 'none', fontWeight: 600, ml: 1 }}>
+        <Button
+          color="inherit"
+          startIcon={icon}
+          onClick={onClick}
+          loading={loggingOut}
+          loadingPosition="start"
+          sx={{ textTransform: 'none', fontWeight: 600, ml: 1 }}
+        >
           {label}
         </Button>
       )}
