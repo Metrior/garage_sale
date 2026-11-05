@@ -2,10 +2,12 @@ import { useMemo, useState } from 'react'
 import { Link as RouterLink, useOutletContext } from 'react-router'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import Chip from '@mui/material/Chip'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import AddIcon from '@mui/icons-material/Add'
+import CheckIcon from '@mui/icons-material/Check'
 import DeleteItemDialog from '../../components/DeleteItemDialog'
 import ItemAdminActions from '../../components/ItemAdminActions'
 import ItemCard from '../../components/ItemCard'
@@ -23,13 +25,19 @@ import { sortItems } from '../../utils/sortItems'
 export default function GalleryPage() {
   const { items, status } = useItems()
   const { isAdmin } = useAuth()
-  const { query, setQuery, sort, setSort } = useOutletContext<GalleryState>()
+  const { query, setQuery, sort, setSort, bookedOnly, setBookedOnly } = useOutletContext<GalleryState>()
   const [dialogItem, setDialogItem] = useState<Item | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState<Item | null>(null)
   const [deleteOpen, setDeleteOpen] = useState(false)
   const searchQuery = useDebouncedQuery(query)
-  const visibleItems = useMemo(() => searchByTitle(sortItems(items, sort), searchQuery), [items, sort, searchQuery])
+  // The filter stays set if the admin logs out, but only applies while they're logged in.
+  const showBookedOnly = isAdmin && bookedOnly
+  const visibleItems = useMemo(() => {
+    const found = searchByTitle(sortItems(items, sort), searchQuery)
+    return showBookedOnly ? found.filter((item) => item.booked_by) : found
+  }, [items, sort, searchQuery, showBookedOnly])
+  const trimmedQuery = searchQuery.trim()
 
   const openItem = (item: Item) => {
     setDialogItem(item)
@@ -64,6 +72,16 @@ export default function GalleryPage() {
           <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1.5 }}>
             <SearchField value={query} onChange={setQuery} sx={{ flexGrow: 1, minWidth: 250, width: { sm: 260 } }} />
             <SortMenu value={sort} onChange={setSort} />
+            {isAdmin && (
+              <Chip
+                label="Booked"
+                color="booked"
+                variant={bookedOnly ? 'filled' : 'outlined'}
+                icon={bookedOnly ? <CheckIcon /> : undefined}
+                onClick={() => setBookedOnly(!bookedOnly)}
+                aria-pressed={bookedOnly}
+              />
+            )}
           </Box>
         </Stack>
       </Stack>
@@ -78,10 +96,25 @@ export default function GalleryPage() {
       )}
       {status === 'ready' && items.length > 0 && visibleItems.length === 0 && (
         <Stack spacing={2} sx={{ alignItems: 'center', py: 8, textAlign: 'center' }}>
-          <Typography variant="h6">Nothing found for “{searchQuery.trim()}”</Typography>
-          <Button variant="contained" onClick={() => setQuery('')}>
-            Clear search
-          </Button>
+          <Typography variant="h6">
+            {!trimmedQuery
+              ? 'No booked items'
+              : showBookedOnly
+                ? `No booked items match “${trimmedQuery}”`
+                : `Nothing found for “${trimmedQuery}”`}
+          </Typography>
+          <Stack direction="row" spacing={2}>
+            {trimmedQuery && (
+              <Button variant="contained" onClick={() => setQuery('')}>
+                Clear search
+              </Button>
+            )}
+            {showBookedOnly && (
+              <Button variant={trimmedQuery ? 'outlined' : 'contained'} color="secondary" onClick={() => setBookedOnly(false)}>
+                Show all items
+              </Button>
+            )}
+          </Stack>
         </Stack>
       )}
       <Box

@@ -4,7 +4,7 @@ import { PHOTO_BUCKET, PHOTO_CACHE_SECONDS, PHOTO_SIZE_NAMES, photoPath } from '
 import { isExternalImage } from '../utils/imageUrl'
 import { preparePhoto } from '../utils/preparePhoto'
 
-const COLUMNS = 'id, title, description, price, per_item, tag, images, created_at'
+const COLUMNS = 'id, title, description, price, per_item, tag, booked_by, images, created_at'
 
 // Newest first; the gallery applies its own sort on top.
 export async function fetchItems(): Promise<Item[]> {

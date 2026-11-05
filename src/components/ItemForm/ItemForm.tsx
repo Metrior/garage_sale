@@ -37,6 +37,7 @@ export default function ItemForm({ item }: { item?: Item }) {
   const [price, setPrice] = useState(item ? String(item.price) : '')
   const [perItem, setPerItem] = useState(item?.per_item ?? false)
   const [tag, setTag] = useState(item?.tag ?? '')
+  const [bookedBy, setBookedBy] = useState(item?.booked_by ?? '')
   const [photos, setPhotos] = useState<FormPhoto[]>(() =>
     (item?.images ?? []).map((key) => ({ id: key, key, preview: imageUrl(key, 'thumb') })),
   )
@@ -98,6 +99,7 @@ export default function ItemForm({ item }: { item?: Item }) {
         price: Number(price.trim()),
         per_item: perItem,
         tag: tag.trim() || null,
+        booked_by: bookedBy.trim() || null,
         images: keys,
       }
       if (item) {
@@ -166,13 +168,7 @@ export default function ItemForm({ item }: { item?: Item }) {
             }}
             sx={{ width: { sm: 200 } }}
           />
-          {/* Lined up with the 56px-tall text fields rather than stretched to the row's height. */}
-          <FormControlLabel
-            control={<Checkbox checked={perItem} onChange={(event) => setPerItem(event.target.checked)} />}
-            label="Per item"
-            disabled={saving}
-            sx={{ alignSelf: 'flex-start', height: { sm: 56 }, flexShrink: 0 }}
-          />
+
           <TextField
             label="Tag (optional)"
             value={tag}
@@ -182,6 +178,24 @@ export default function ItemForm({ item }: { item?: Item }) {
             sx={{ flexGrow: 1 }}
           />
         </Stack>
+
+        {/* "&&" outranks the Stack's own spacing rule, which would otherwise add a margin-top. */}
+        <FormControlLabel
+          control={<Checkbox checked={perItem} onChange={(event) => setPerItem(event.target.checked)} />}
+          label="Per item"
+          disabled={saving}
+          sx={{ alignSelf: 'flex-start', flexShrink: 0, '&&': { m: 0 } }}
+        />
+
+        <TextField
+          label="Booked by (optional)"
+          value={bookedBy}
+          onChange={(event) => setBookedBy(event.target.value)}
+          placeholder="@username"
+          helperText="Only you see this. Leave empty if the item isn't booked."
+          disabled={saving}
+          fullWidth
+        />
 
         {saveError && <Alert severity="error">{saveError}</Alert>}
 

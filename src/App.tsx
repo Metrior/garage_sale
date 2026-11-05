@@ -19,6 +19,8 @@ const theme = createTheme({
     secondary: { main: '#b5832a', contrastText: '#ffffff' },
     background: { default: '#fffbef', paper: '#fffef9' },
     text: { primary: '#3f3726', secondary: '#7a6e55' },
+    // Soft red for the admin's "Booked" chips, gentler than the default error red.
+    booked: { main: '#a8473c', light: '#fcebe7', dark: '#8c3a31', contrastText: '#ffffff' },
   },
   shape: { borderRadius: 10 },
 })

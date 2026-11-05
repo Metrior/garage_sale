@@ -19,6 +19,7 @@ export type Database = {
     Tables: {
       items: {
         Row: {
+          booked_by: string | null
           created_at: string
           description: string
           id: string
@@ -29,6 +30,7 @@ export type Database = {
           title: string
         }
         Insert: {
+          booked_by?: string | null
           created_at?: string
           description?: string
           id?: string
@@ -39,6 +41,7 @@ export type Database = {
           title: string
         }
         Update: {
+          booked_by?: string | null
           created_at?: string
           description?: string
           id?: string
