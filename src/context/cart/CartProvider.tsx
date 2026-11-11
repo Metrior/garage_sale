@@ -26,7 +26,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cartIds, setCartIds] = useState(loadCartIds)
   const itemsById = useMemo(() => new Map(items.map((item) => [item.id, item])), [items])
 
-  // Ids of items that no longer exist (deleted by the admin) are skipped here and dropped from
+  // Ids of items that are gone (deleted, or booked and so hidden from visitors) are skipped here and dropped from
   // storage below, but only once the items have loaded, so a slow or failed load never empties the cart.
   const cartItems = useMemo(() => cartIds.map((id) => itemsById.get(id)).filter((item): item is Item => item !== undefined), [cartIds, itemsById])
 
