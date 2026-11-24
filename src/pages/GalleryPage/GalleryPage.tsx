@@ -19,6 +19,7 @@ import { useAuth } from '../../context/auth'
 import { useItems } from '../../context/items'
 import { useDebouncedQuery } from '../../hooks/useDebouncedQuery'
 import type { GalleryState, Item } from '../../types'
+import { editItemPath } from '../../utils/itemPaths'
 import { searchByTitle } from '../../utils/searchItems'
 import { sortItems } from '../../utils/sortItems'
 
@@ -129,6 +130,7 @@ export default function GalleryPage() {
             key={item.id}
             item={item}
             onOpen={() => openItem(item)}
+            editPath={isAdmin ? editItemPath(item.id) : undefined}
             actions={isAdmin ? <ItemAdminActions item={item} onDelete={askToDelete} /> : undefined}
           />
         ))}

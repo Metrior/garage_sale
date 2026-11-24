@@ -7,6 +7,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import StorefrontIcon from '@mui/icons-material/Storefront'
+import { useAuth } from '../../context/auth'
 import { useCart } from '../../context/cart'
 import { formatPrice } from '../../utils/formatPrice'
 import AccountButton from '../AccountButton'
@@ -18,6 +19,7 @@ const NAV_LINKS = [
 
 export default function Header() {
   const { count, total } = useCart()
+  const { isAdmin } = useAuth()
   const itemsLabel = `${count} ${count === 1 ? 'item' : 'items'}`
 
   return (
@@ -59,20 +61,23 @@ export default function Header() {
 
         <Box sx={{ flexGrow: 1 }} />
 
-        <Button
-          component={RouterLink}
-          to="/cart"
-          color="inherit"
-          aria-label={`Cart: ${itemsLabel}, ${formatPrice(total)}`}
-          startIcon={
-            <Badge badgeContent={count} color="secondary" showZero>
-              <ShoppingCartIcon />
-            </Badge>
-          }
-          sx={{ textTransform: 'none', fontWeight: 600, '& .MuiButton-startIcon': { mr: 1.5 } }}
-        >
-          {formatPrice(total)}
-        </Button>
+        {/* The admin doesn't shop, so their header has no cart. */}
+        {!isAdmin && (
+          <Button
+            component={RouterLink}
+            to="/cart"
+            color="inherit"
+            aria-label={`Cart: ${itemsLabel}, ${formatPrice(total)}`}
+            startIcon={
+              <Badge badgeContent={count} color="secondary" showZero>
+                <ShoppingCartIcon />
+              </Badge>
+            }
+            sx={{ textTransform: 'none', fontWeight: 600, '& .MuiButton-startIcon': { mr: 1.5 } }}
+          >
+            {formatPrice(total)}
+          </Button>
+        )}
         <AccountButton />
       </Toolbar>
     </AppBar>

@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import type { Item } from '../../types'
+import { editItemPath } from '../../utils/itemPaths'
 
 // Shown on each card instead of "Add to cart" while the admin is logged in.
 export default function ItemAdminActions({ item, onDelete }: { item: Item; onDelete: (item: Item) => void }) {
@@ -11,7 +12,7 @@ export default function ItemAdminActions({ item, onDelete }: { item: Item; onDel
     <Stack direction="row" spacing={1} sx={{ width: '100%' }}>
       <Button
         component={RouterLink}
-        to={`/edit/${encodeURIComponent(item.id)}`}
+        to={editItemPath(item.id)}
         variant="outlined"
         color="secondary"
         startIcon={<EditOutlinedIcon />}

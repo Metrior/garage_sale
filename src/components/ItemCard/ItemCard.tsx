@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { Link as RouterLink } from 'react-router'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardActionArea from '@mui/material/CardActionArea'
@@ -16,55 +17,69 @@ import ItemPrice from '../ItemPrice'
 // `actions` replaces the default "Add to cart" button (the logged-in admin sees Edit and Delete instead).
 interface ItemCardProps {
   item: Item
-  // Opens the item's photos.
+  // Opens the item's photos when the photo is clicked.
   onOpen: () => void
+  // Set while the admin is logged in: clicking the photo goes to this edit form instead of opening the photos.
+  editPath?: string
   actions?: ReactNode
 }
 
-export default function ItemCard({ item, onOpen, actions }: ItemCardProps) {
+export default function ItemCard({ item, onOpen, editPath, actions }: ItemCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false)
   const photoCount = item.images.length
 
+  const photo = (
+    <>
+      {!imageLoaded && (
+        <Skeleton variant="rectangular" animation="wave" sx={{ position: 'absolute', inset: 0, height: '100%' }} />
+      )}
+      <CardMedia
+        component="img"
+        image={imageUrl(item.images[0], 'thumb')}
+        alt={item.title}
+        loading="lazy"
+        // Errors also clear the skeleton so a broken image isn't hidden behind it forever.
+        onLoad={() => setImageLoaded(true)}
+        onError={() => setImageLoaded(true)}
+        sx={{ aspectRatio: '1 / 1', objectFit: 'cover', opacity: imageLoaded ? 1 : 0, transition: 'opacity 0.3s' }}
+      />
+      {photoCount > 1 && (
+        <Box
+          component="span"
+          sx={{
+            position: 'absolute',
+            right: 8,
+            bottom: 8,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 0.5,
+            px: 1,
+            py: 0.25,
+            borderRadius: 4,
+            color: 'common.white',
+            bgcolor: 'rgba(0, 0, 0, 0.6)',
+            fontSize: 13,
+            fontWeight: 500,
+          }}
+        >
+          <PhotoLibraryOutlinedIcon sx={{ fontSize: 16 }} />
+          {photoCount}
+        </Box>
+      )}
+    </>
+  )
+
   return (
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <CardActionArea onClick={onOpen} aria-label={`View photos of ${item.title}`} sx={{ position: 'relative' }}>
-        {!imageLoaded && (
-          <Skeleton variant="rectangular" animation="wave" sx={{ position: 'absolute', inset: 0, height: '100%' }} />
-        )}
-        <CardMedia
-          component="img"
-          image={imageUrl(item.images[0], 'thumb')}
-          alt={item.title}
-          loading="lazy"
-          // Errors also clear the skeleton so a broken image isn't hidden behind it forever.
-          onLoad={() => setImageLoaded(true)}
-          onError={() => setImageLoaded(true)}
-          sx={{ aspectRatio: '1 / 1', objectFit: 'cover', opacity: imageLoaded ? 1 : 0, transition: 'opacity 0.3s' }}
-        />
-        {photoCount > 1 && (
-          <Box
-            component="span"
-            sx={{
-              position: 'absolute',
-              right: 8,
-              bottom: 8,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 0.5,
-              px: 1,
-              py: 0.25,
-              borderRadius: 4,
-              color: 'common.white',
-              bgcolor: 'rgba(0, 0, 0, 0.6)',
-              fontSize: 13,
-              fontWeight: 500,
-            }}
-          >
-            <PhotoLibraryOutlinedIcon sx={{ fontSize: 16 }} />
-            {photoCount}
-          </Box>
-        )}
-      </CardActionArea>
+      {editPath ? (
+        <CardActionArea component={RouterLink} to={editPath} aria-label={`Edit ${item.title}`} sx={{ position: 'relative' }}>
+          {photo}
+        </CardActionArea>
+      ) : (
+        <CardActionArea onClick={onOpen} aria-label={`View photos of ${item.title}`} sx={{ position: 'relative' }}>
+          {photo}
+        </CardActionArea>
+      )}
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography variant="h6" component="h2" sx={{ lineHeight: 1.3 }}>
           {item.title}
